@@ -40,6 +40,6 @@ streamlit run app.py
 - Effortlessly Scraping Massive Twitter Data with snscrape: A Guide to Scraping 1000,000 Tweets in Less than a Day
 *https://medium.com/@ka2612/effortlessly-scraping-massive-twitter-data-with-snscrape-a-guide-to-scraping-1000-000-tweets-in-d01c38e82d18*  
 
-- ChatGPT Code: A Deep Dive into 500,000 Tweets using Advanced NLP Techniques
-*https://medium.com/@ka2612/the-chatgpt-phenomenon-unraveling-insights-from-500-000-tweets-using-nlp-8ec0ad8ffd37*  Cracking the 
+- Cracking the ChatGPT Code: A Deep Dive into 500,000 Tweets using Advanced NLP Techniques
+*https://medium.com/@ka2612/the-chatgpt-phenomenon-unraveling-insights-from-500-000-tweets-using-nlp-8ec0ad8ffd37*   
 
