@@ -30,7 +30,7 @@ Vous devez impérativement installer Python sur votre machine ainsi que les dép
 
 *Select Kernel <Nom de l'environnement virtuel>*
 
-## Lanchement de l'pplication web sur Streamlit
+## Lanchement de l'application web sur Streamlit
 Lancer l'application Streamlit
 ```
 streamlit run app.py
