@@ -3,7 +3,7 @@
 Ce dashboard explore l'impact de ChatGPT sur Twitter en analysant environ 300 000 tweets. À travers cette étude, nous examinons l'enthousiasme des utilisateurs, les tendances émergentes et l'évolution de l'outil. L'objectif est de mieux comprendre les perceptions publiques, les facteurs influençant ChatGPT, et ses applications potentielles. Grâce à des analyses sur le volume de tweets, le sentiment, l'engagement et les événements clés liés à l'IA, ce dashboard fournit des insights précieux pour guider les stratégies des entreprises, chercheurs et décideurs.
 
 ## Extraits d'images du Dashboard
-<img src="images_readme/Part_1_dashboard.PNG"/>
+<img src="images_readme/Part_1_dashboard.png"/>
 <img src="images_readme/Part_2_dashboard.PNG"/>
 
 ## Installations à faire 
