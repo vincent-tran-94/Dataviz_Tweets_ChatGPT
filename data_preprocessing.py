@@ -18,12 +18,3 @@ def count_unique_words(text):
     words = re.findall(r'\b\w+\b', str(text).lower())
     return len(set(words))
 
-
-def best_words(df2):
-    all_words = ' '.join(df2['processed_tweet']).split()
-    # Compter les occurrences des mots (optionnel, pour analyse supplémentaire)
-    word_counts = pd.DataFrame(all_words).value_counts().reset_index()
-    return word_counts
-
-
-   
