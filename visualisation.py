@@ -2,7 +2,6 @@
 import plotly.express as px
 import streamlit as st
 from data_preprocessing import *
-from PIL import Image
 
 
 def page1(df,df2):
@@ -23,102 +22,155 @@ def page2(df2):
         "🔠 Wordcloud de mots des tweets ",
         "🎯 Analyse des hashtags et des mentions d’utilisateurs"
     ])
-    
+
     with tab1:
-        max_like_count = 1500
-        max_retweet_count = 300
-        min_like_count = 150
-        min_retweet_count = 50
+        st.subheader("Filtrage dynamique des Likes et Retweets")
+        
+        # Création de colonnes pour aligner les sliders à droite de la figure
+        col1, col2 = st.columns([2, 1])  # Largeur relative : figure (3 parts), sliders (1 part)
 
-        # Convertir les colonnes en numérique avec gestion des erreurs
-        df2['Likes'] = pd.to_numeric(df2['Likes'], errors='coerce')
-        df2['Retweets'] = pd.to_numeric(df2['Retweets'], errors='coerce')
+        # Colonne droite : sliders
+        with col2:
+            st.markdown("### Ajustez les filtres :")
+            
+            # Widgets pour définir les plages de Likes et Retweets
+            min_like_count, max_like_count = st.slider(
+                "Plage des Likes",
+                min_value=int(df2['Likes'].min()),
+                max_value=int(df2['Likes'].max()),
+                value=(150, 1500)
+            )
+            min_retweet_count, max_retweet_count = st.slider(
+                "Plage des Retweets",
+                min_value=int(df2['Retweets'].min()),
+                max_value=int(df2['Retweets'].max()),
+                value=(50, 300)
+            )
 
+            # Convertir les colonnes en numérique avec gestion des erreurs
+            df2['Likes'] = pd.to_numeric(df2['Likes'], errors='coerce')
+            df2['Retweets'] = pd.to_numeric(df2['Retweets'], errors='coerce')
 
-        # Filtrer les données
-        df2_filtered = df2[
-            (df2['Likes'] <= max_like_count) & 
-            (df2['Likes'] >= min_like_count) & 
-            (df2['Retweets'] <= max_retweet_count) & 
-            (df2['Retweets'] >= min_retweet_count)
-        ]
-
-        # Créer un graphique de dispersion
-        fig = px.scatter(
-            df2_filtered,
-            x='Likes',
-            y='Retweets',
-            color='Likes',
-            color_continuous_scale=[
-                (0, "#ff7f00"),  # Couleur pour les faibles densités
-                (0.5, "#e5e619"),                   
-                (1, "#16bb26")  # Couleur pour les densités élevées
+            # Filtrer les données selon les plages sélectionnées
+            df2_filtered = df2[
+                (df2['Likes'] <= max_like_count) & 
+                (df2['Likes'] >= min_like_count) & 
+                (df2['Retweets'] <= max_retweet_count) & 
+                (df2['Retweets'] >= min_retweet_count)
             ]
-        )
+        
+        # Colonne gauche : graphique de dispersion
+        with col1:
+            # Créer un graphique de dispersion
+            fig = px.scatter(
+                df2_filtered,
+                x='Likes',
+                y='Retweets',
+                color='Likes',
+                hover_data=['User'],
+                color_continuous_scale=[
+                    (0, "#ff7f00"),  # Couleur pour les faibles densités
+                    (0.5, "#e5e619"),                   
+                    (1, "#16bb26")  # Couleur pour les densités élevées
+                ]
+            )
 
-        # Personnaliser la mise en page
-        fig.update_layout(
-            title={
-                'text': "Relation entre Likes et Retweets",
-                'y': 0.95, 'x': 0.5, 'xanchor': 'center', 'yanchor': 'top'
-            },
-            xaxis=dict(
-                title='Nombre de Likes',
-                showgrid=True, gridcolor='lightgrey', gridwidth=0.5,
-                zeroline=True, zerolinecolor='black'
-            ),
-            yaxis=dict(
-                title='Nombre de Retweets',
-                showgrid=True, gridcolor='lightgrey', gridwidth=0.5,
-                zeroline=True, zerolinecolor='black'
-            ),
-            plot_bgcolor='rgba(0,0,0,0)',
-            height=600,
-            width=800
-        )
+            # Personnaliser la mise en page
+            fig.update_layout(
+                title={
+                    'text': "Relation entre Likes et Retweets",
+                    'y': 0.95, 'x': 0.5, 'xanchor': 'center', 'yanchor': 'top'
+                },
+                xaxis=dict(
+                    title='Nombre de Likes',
+                    showgrid=True, gridcolor='lightgrey', gridwidth=0.5,
+                    zeroline=True, zerolinecolor='black'
+                ),
+                yaxis=dict(
+                    title='Nombre de Retweets',
+                    showgrid=True, gridcolor='lightgrey', gridwidth=0.5,
+                    zeroline=True, zerolinecolor='black'
+                ),
+                plot_bgcolor='rgba(0,0,0,0)',
+                height=600,
+                width=800
+            )
 
-        # Afficher le graphique
-        st.plotly_chart(fig)
+            # Afficher le graphique
+            st.plotly_chart(fig)
+
 
     with tab2:
-        # Compter la fréquence des tweets par date
-        date_distribution = df2["Date"].value_counts().reset_index()
-        date_distribution.columns = ["Date", "TweetCount"]
-        date_distribution = date_distribution.sort_values("Date")  # Trier par date
-        
-                # Créer un graphique à barres
-        fig = px.bar(
-            date_distribution,
-            x="Date",
-            y="TweetCount",
-            color='TweetCount',  # Remplacez par une colonne pertinente si disponible
-            title="Distribution des tweets par période",
-            color_continuous_scale=[ (0, "#ADD8E6"),  # Couleur pour les faibles densités
-                (0.5,"#0047AB" ),  # Couleur pour les densités moyennes
-                (1, "#FFD700")]
-        )
+        st.subheader("Distribution des Tweets par Date")
 
-        # Personnalisation du graphique
-        fig.update_traces(textposition="outside")
-        fig.update_layout(
-            width=800,
-            height=500,
-            coloraxis_colorbar=dict(
-                title="Quantité de Tweets",  # Titre de la barre de couleur
-                ticks="outside",
-            ),
-            xaxis=dict(
-                title='Date de publication',
-                showgrid=True, gridcolor='lightgrey', gridwidth=0.5,
-            ),
-            yaxis=dict(
-                title='Nombre de tweets',
-                showgrid=True, gridcolor='lightgrey', gridwidth=0.5,
-            ),
-        )
+        # Convertir la colonne "Date" en datetime si ce n'est pas déjà fait
+        df2['Date'] = pd.to_datetime(df2['Date'])
+        df2['Date'] = df2['Date'].dt.date
 
-        # Afficher le graphique
-        st.plotly_chart(fig)
+        # Définir la date minimale et maximale des tweets
+        min_date = df2['Date'].min()
+        max_date = df2['Date'].max()
+
+        # Créer deux colonnes pour la disposition du graphique et des sliders
+        col1, col2 = st.columns([2, 1]) 
+
+        # Colonne droite : sliders de date
+        with col2:
+            st.markdown("### Ajustez la période des tweets")
+            # Utiliser un slider pour sélectionner la plage de dates
+            selected_start_date, selected_end_date = st.slider(
+                "Sélectionnez la période des tweets",
+                min_value=min_date,
+                max_value=max_date,
+                value=(min_date, max_date),
+                format="YYYY-MM-DD"
+            )
+        # Colonne gauche : graphique de distribution des tweets
+        with col1:
+            # Filtrer les données en fonction de la plage de dates sélectionnée
+            df_filtered_by_date = df2[(df2['Date'] >= selected_start_date) & (df2['Date'] <= selected_end_date)]
+
+            # Compter la fréquence des tweets par date
+            date_distribution = df_filtered_by_date["Date"].value_counts().reset_index()
+            date_distribution.columns = ["Date", "TweetCount"]
+            date_distribution = date_distribution.sort_values("Date")  # Trier par date
+
+            # Créer un graphique à barres
+            fig = px.bar(
+                date_distribution,
+                x="Date",
+                y="TweetCount",
+                color='TweetCount',  # Remplacez par une colonne pertinente si disponible
+                title="Distribution des tweets par période",
+                color_continuous_scale=[ 
+                    (0, "#ADD8E6"),  # Couleur pour les faibles densités
+                    (0.5, "#0047AB"),  # Couleur pour les densités moyennes
+                    (1, "#FFD700")  # Couleur pour les densités élevées
+                ]
+            )
+
+            # Personnalisation du graphique
+            fig.update_traces(textposition="outside")
+            fig.update_layout(
+                width=800,
+                height=500,
+                coloraxis_colorbar=dict(
+                    title="Quantité de Tweets",  # Titre de la barre de couleur
+                    ticks="outside",
+                ),
+                xaxis=dict(
+                    title='Date de publication',
+                    showgrid=True, gridcolor='lightgrey', gridwidth=0.5,
+                ),
+                yaxis=dict(
+                    title='Nombre de tweets',
+                    showgrid=True, gridcolor='lightgrey', gridwidth=0.5,
+                ),
+            )
+
+            # Afficher le graphique
+            st.plotly_chart(fig)
+
 
     with tab3:
         tweets_by_user = df2.groupby('User').size().sort_values(ascending=False)

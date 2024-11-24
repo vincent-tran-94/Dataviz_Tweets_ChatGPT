@@ -61,11 +61,10 @@ col10.metric("Total global des retweets", int(df2["Retweets"].sum()))
 
 
 # Filtrer par utilisateur
-selected_user = st.selectbox("Choisissez un utilisateur :", user_metrics["User"].unique())
+selected_user = st.selectbox("Choisissez un utilisateur :", user_metrics["User"].unique(),index=None,placeholder="Select user...")
 if selected_user:
-
     user_data = user_metrics[user_metrics["User"] == selected_user].iloc[0]
-    user_tweets = df[df["User"] == selected_user]
+    user_tweets = df2[df2["User"] == selected_user]
     user_urls = user_tweets["Url"].tolist()  
 
     st.markdown(f"### Métriques pour l'utilisateur : **{selected_user}**")
@@ -80,8 +79,23 @@ if selected_user:
     col6.metric("Total de mots uniques", user_data["unique_words"])
 
     st.markdown("Liste des URLs associées :")
-    for url in user_urls:
-        st.markdown(f"- {url}")
+    user_tweets_table = user_tweets[["Date", "processed_tweet", "Url"]].rename(
+        columns={
+            "Date": "Date",
+            "processed_tweet": "Cleaning Tweet",
+            "Url": "Associated URL"
+        }
+    )
+
+    #Mettre une balise HTML pour accéder au lien directement sur Streamlit
+    user_tweets_table["Associated URL"] = user_tweets_table["Associated URL"].apply(
+        lambda url: f'<a href="{url}" target="_blank">{url}</a>')
+
+    # Convertir le DataFrame en HTML
+    table_html = user_tweets_table.to_html(escape=False, index=False)
+    # Afficher le tableau HTML dans Streamlit
+    st.markdown(table_html, unsafe_allow_html=True)
+
 
 
 with st.sidebar:
