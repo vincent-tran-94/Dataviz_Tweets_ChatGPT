@@ -7,6 +7,7 @@ from data_preprocessing import *
 path_csv_1 = "data/tweets_users_chatgpt.csv"
 path_csv_2 = "data/tweets_preprocess.csv"
 
+st.cache_resource.clear()
 st.cache_data.clear()
 
 st.set_page_config(
@@ -15,17 +16,24 @@ st.set_page_config(
     layout="wide"
 )
 
-try:
-    df = load_data(path_csv_1)
-    df2 = load_data(path_csv_2)
-except Exception as e:
-    st.error(f"Erreur lors du chargement des données: {str(e)}")
-    st.stop()
 
-# Application principale
-st.title("Analyse des Tweets pour des utilisateurs lors de la sortie de ChatGPT")
-st.markdown("**Calcul des métriques** : likes, retweets, tweets, followers, amis et nombre de mots différents")
+# Chargement des données avec session_state (Gestion de cookies su)
+if 'data_loaded' not in st.session_state:
+    st.session_state.data_loaded = False
 
+if not st.session_state.data_loaded:
+    try:
+        st.session_state.df = load_data(path_csv_1)
+        st.session_state.df2 = load_data(path_csv_2)
+        st.session_state.data_loaded = True
+    except Exception as e:
+        st.error(f"Erreur lors du chargement des données : {str(e)}")
+        st.stop()
+
+df = st.session_state.df
+df2 = st.session_state.df2
+
+#Filtrer chaque metrique des utilisateurs
 user_metrics = (
     df2.groupby("User")
     .agg(
@@ -39,10 +47,26 @@ user_metrics = (
     .reset_index()
 )
 
+# Application principale
+st.title("Analyse des Tweets pour des utilisateurs lors de la sortie de ChatGPT")
+st.markdown("**Calcul des métriques** : likes, retweets, tweets, followers, amis et nombre de mots différents")
+
+# Métriques globales
+st.markdown("### Métriques globales :")
+col7, col8, col9, col10 = st.columns(4)
+col7.metric("Total global des tweets", len(df2["processed_tweet"]))
+col8.metric("Total global des utilisateurs", len(user_metrics["User"]))
+col9.metric("Total global des likes", int(df2["Likes"].sum()))
+col10.metric("Total global des retweets", int(df2["Retweets"].sum()))
+
+
 # Filtrer par utilisateur
 selected_user = st.selectbox("Choisissez un utilisateur :", user_metrics["User"].unique())
 if selected_user:
+
     user_data = user_metrics[user_metrics["User"] == selected_user].iloc[0]
+    user_tweets = df[df["User"] == selected_user]
+    user_urls = user_tweets["Url"].tolist()  
 
     st.markdown(f"### Métriques pour l'utilisateur : **{selected_user}**")
     col1, col2, col3 = st.columns(3)
@@ -55,11 +79,10 @@ if selected_user:
     col5.metric("Nombre d'amis", int(user_data["total_friends"]))
     col6.metric("Total de mots uniques", user_data["unique_words"])
 
+    st.markdown("Liste des URLs associées :")
+    for url in user_urls:
+        st.markdown(f"- {url}")
 
-# Métriques globales
-st.markdown("### Métriques globales :")
-all_tweets = df2["processed_tweet"].tolist()
-st.metric("Total des utilisateurs", len(user_metrics))
 
 with st.sidebar:
     st.title("Dashboard sur l'Analyse des Tweets sur ChatGPT")
@@ -74,6 +97,7 @@ with st.sidebar:
     """
     )
     st.subheader("Selection de pages")
+
 
 
 page = st.sidebar.radio("Select a page", ["Description Dataset", "Visualisations"])
