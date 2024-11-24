@@ -114,11 +114,11 @@ with st.sidebar:
 
 
 
-page = st.sidebar.radio("Select a page", ["Description Dataset", "Visualisations"])
+page = st.sidebar.radio("Select a page", ["Description global du dataset", "Visualisations globales"])
 # Display selected page
-if page == "Description Dataset":
+if page == "Description global du dataset":
     page1(df,df2)
-elif page == "Visualisations":
+elif page == "Visualisations globales":
     tab1, tab2, tab3, tab4, tab5 = page2(df2)
 
     
