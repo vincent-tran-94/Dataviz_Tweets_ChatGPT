@@ -46,6 +46,7 @@ def page2(df2):
                 max_value=int(df2['Retweets'].max()),
                 value=(50, 300)
             )
+            
 
             # Convertir les colonnes en numérique avec gestion des erreurs
             df2['Likes'] = pd.to_numeric(df2['Likes'], errors='coerce')
