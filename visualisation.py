@@ -15,12 +15,11 @@ def page1(df,df2):
     st.dataframe(df2[['Likes', 'Retweets']].describe())
 
 def page2(df2):
-
     tab1, tab2 = st.tabs([
         "👍 Relation Likes et Retweets",
         "📶 Periode d'analyse de données en jour, semaine et mois",
     ])
-    
+
     tab3,tab4, tab5 = st.tabs([
         "📊 Top utilisateurs les plus actifs sur Twitter",
         "🔠 Wordcloud de mots des tweets ",
