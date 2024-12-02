@@ -4,8 +4,8 @@ from visualisation import *
 from data_preprocessing import *
 
 
-path_csv_1 = "data/tweets_users_chatgpt.csv"
-path_csv_2 = "data/tweets_preprocess.csv"
+path_csv_1 = "data/input_csv/tweets_users_chatgpt.csv"
+path_csv_2 = "data/output_csv/tweets_preprocess.csv"
 
 st.cache_resource.clear()
 st.cache_data.clear()
