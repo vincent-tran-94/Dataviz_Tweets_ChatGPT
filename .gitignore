@@ -163,9 +163,9 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-data/tweets_users_chatgpt.csv
-data/tweets_preprocess.csv
-data/top_hashtags.csv
-data/top_mentions.csv
-data/word_counts.csv
+data/input_csv/*
+data/output_csv/*
+data/output_png/*
+
+
 

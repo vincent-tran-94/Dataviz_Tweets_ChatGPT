@@ -209,11 +209,62 @@ def page2(df2):
         st.plotly_chart(fig_users)
 
     with tab4:
-        st.image("data/twitter_wordcloud.png", caption="Représentation d'un Wordcloud en fonction d'occurrence de mots des tweets ")
+        col1, col2 = st.columns(2) 
+        with col1: 
+            st.image("data/output_png/twitter_wordcloud.png")
+            st.markdown("""
+            <div style="font-size: 25px; font-weight: bold;">
+                Meilleurs mots (De novembre 2022 à février 2023)
+            </div>
+            """,
+            unsafe_allow_html=True)
+            st.image("data/output_png/twitter_wordcloud_2.png")
+            st.markdown("""
+            <div style="font-size: 25px; font-weight: bold;">
+                Meilleurs mots (De janvier à mars 2023)
+            </div>
+            """,
+            unsafe_allow_html=True)
+
+        with col2: 
+            top_words_first = pd.read_csv("data/output_csv/word_counts.csv")
+            top_words_second = pd.read_csv("data/output_csv/word_counts_2.csv")
+        
+            top_number_words_first = 10 
+            top_number_words_second = 10 
+           
+            # Premier graphique interactif
+            st.subheader("Top 10 des meilleurs mots sur environ 200 000 tweets (De novembre 2022 à février 2023)")
+            fig1 = px.bar(
+                top_words_first.head(top_number_words_first),
+                x="Count",
+                y="Word",
+                orientation='h',
+                labels={"Count": "Total", "Word": "Mot"},
+                color="Count",  # Ajoute une couleur basée sur le nombre d'occurrences
+                color_continuous_scale="Viridis"  # Palette de couleurs
+            )
+            fig1.update_layout(xaxis=dict(showgrid=True, gridcolor='lightgrey', gridwidth=0.5),yaxis=dict(categoryorder="total ascending",showgrid=True, gridcolor='lightgrey', gridwidth=0.5))  # Trie par ordre croissant
+            st.plotly_chart(fig1)
+
+            # Deuxième graphique interactif
+            st.subheader("Top 10 des meilleurs mots sur l'article de presse de 500 000 tweets (De janvier à mars 2023)")
+            fig2 = px.bar(
+                top_words_second.head(top_number_words_second),
+                x="Count",
+                y="Word",
+                orientation='h',
+                labels={"Count": "Total", "Word": "Mot"},
+                color="Count",  # Ajoute une couleur basée sur le nombre d'occurrences
+                color_continuous_scale="Magma"  # Palette de couleurs différente
+            )
+            fig2.update_layout(xaxis=dict(showgrid=True, gridcolor='lightgrey', gridwidth=0.5),yaxis=dict(categoryorder="total ascending",showgrid=True, gridcolor='lightgrey', gridwidth=0.5))  # Trie par ordre croissant
+            st.plotly_chart(fig2)
+
 
     with tab5:
-        top_hashtags = pd.read_csv("data/top_hashtags.csv")
-        top_mentions = pd.read_csv("data/top_mentions.csv")
+        top_hashtags = pd.read_csv("data/output_csv/top_hashtags.csv")
+        top_mentions = pd.read_csv("data/output_csv/top_mentions.csv")
         top_number_hashtags = 10 
         top_number_mentions = 10 
 
