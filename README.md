@@ -6,8 +6,38 @@ Ce dashboard explore l'impact de ChatGPT sur Twitter en analysant environ 300 00
 <img src="images_readme/Part_1_dashboard.png"/>
 <img src="images_readme/Part_2_dashboard.PNG"/>
 
+## Structure du projet
+
+Projet_Streamlit
+├── README.md
+├── requirements.txt
+├── Tweets_users_chatgpt.ipynb
+├── app
+│   ├── app.py
+│   ├── read_data.py
+│   ├── visualisation.py
+│   └── data
+│       ├── content
+│       │   └── SketchBook-B5pB.ttf
+│       ├── input_csv
+│       │   ├── tweets_users_chatgpt.csv
+│       │   └── Twitter_article.csv
+│       ├── output_csv
+│       │   ├── top_hashtags.csv
+│       │   ├── top_mentions.csv
+│       │   ├── tweets_preprocess.csv
+│       │   ├── word_counts_2.csv
+│       │   └── word_counts.csv
+│       └── output_png
+│           ├── twitter_wordcloud_2.png
+│           ├── twitter_wordcloud.png
+│           └── twitter-logo.png
+└── images_readme
+        ├── Part_1_dashboard.png
+        └── Part_2_dashboard.PNG
+        
 ## Installations à faire 
-- Version Python 3.11.7
+- Version Python 3.11.7 <br>
 Importer le lien du projet et puis créez votre environnement virtuel
 Importer le lien du projet et puis créez votre environnement virtuel
 ```
@@ -27,10 +57,13 @@ pip install -r requirements.txt
 ## Analyse des données et import des fichiers CSV
 Le fichier Projet_Vincent_Python.ipynb est un fichier notebook qui permet d'analyser les données sur les performances du rameur 
 Vous devez impérativement installer Python sur votre machine ainsi que les dépendances 
-
-*Select Kernel <Nom de l'environnement virtuel>*
+Avant de lancer l'application Streamlit, lancer d'abord le notebook pour générer les fichiers CSV 
 
 ## Lanchement de l'application web sur Streamlit
+Diriger vous vers le dossier app
+```
+cd app/
+```
 Lancer l'application Streamlit
 ```
 streamlit run app.py
