@@ -166,9 +166,7 @@ cython_debug/
 data/input_csv/*
 data/output_csv/*
 data/output_png/*
-!data/input_csv/
-!data/output_png/
-!data/output_csv/
 
-
-
+!data/input_csv/.gitkeep
+!data/output_csv/.gitkeep
+!data/output_png/.gitkeep
