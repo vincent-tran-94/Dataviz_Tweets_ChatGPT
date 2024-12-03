@@ -8,6 +8,7 @@ Ce dashboard explore l'impact de ChatGPT sur Twitter en analysant environ 300 00
 
 ## Structure du projet
 
+```
 Projet_Streamlit
 ├── README.md
 ├── requirements.txt
@@ -35,6 +36,7 @@ Projet_Streamlit
 └── images_readme
         ├── Part_1_dashboard.png
         └── Part_2_dashboard.PNG
+```
         
 ## Installations à faire 
 - Version Python 3.11.7 <br>
