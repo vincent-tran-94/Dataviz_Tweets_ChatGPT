@@ -57,8 +57,7 @@ pip install -r requirements.txt
 ```
 
 ## Analyse des données et import des fichiers CSV
-Le fichier Projet_Vincent_Python.ipynb est un fichier notebook qui permet d'analyser les données sur les performances du rameur 
-Vous devez impérativement installer Python sur votre machine ainsi que les dépendances 
+Le fichier Projet_Vincent_Python.ipynb est un fichier notebook qui permet d'analyser les données sur les Tweets de ChatGPT
 Avant de lancer l'application Streamlit, lancer d'abord le notebook pour générer les fichiers CSV 
 
 ## Lanchement de l'application web sur Streamlit
