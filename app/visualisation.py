@@ -11,8 +11,8 @@ def page1(df,df2):
     st.dataframe(df[['Tweet', 'UserDescription']].head())
     st.subheader("Aperçu des données après le nettoyage")
     st.dataframe(df2[['processed_tweet', 'processed_userdescription']].head())
-    st.subheader("Analyse descriptive des likes et des retweets")
-    st.dataframe(df2[['Likes', 'Retweets']].describe())
+    st.subheader("Analyse descriptive globale")
+    st.dataframe(df2.describe())
 
 def page2(df2):
     tab1, tab2 = st.tabs([
