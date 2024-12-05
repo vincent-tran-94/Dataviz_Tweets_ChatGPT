@@ -66,8 +66,11 @@ if selected_user:
     user_data = user_metrics[user_metrics["User"] == selected_user].iloc[0]
     user_tweets = df2[df2["User"] == selected_user]
     user_urls = user_tweets["Url"].tolist()  
+    user_description = user_tweets["UserDescription"].iloc[0]  # Récupère la description de l'utilisateur
 
     st.markdown(f"### Métriques pour l'utilisateur : **{selected_user}**")
+    st.markdown(f"**Description de l'utilisateur :** {user_description}")  # Affiche la description
+
     col1, col2, col3 = st.columns(3)
     col1.metric("Nombre de Likes", int(user_data["total_likes"]))
     col2.metric("Nombre de Retweets", int(user_data["total_retweets"]))
@@ -79,10 +82,10 @@ if selected_user:
     col6.metric("Total de mots uniques", user_data["unique_words"])
 
     st.markdown("Liste des URLs associées :")
-    user_tweets_table = user_tweets[["Date", "processed_tweet", "Url"]].rename(
+    user_tweets_table = user_tweets[["Date", "Tweet", "Url"]].rename(
         columns={
             "Date": "Date",
-            "processed_tweet": "Cleaning Tweet",
+            "Tweet": "Tweet posté",
             "Url": "Associated URL"
         }
     )
