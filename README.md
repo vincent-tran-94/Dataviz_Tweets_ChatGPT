@@ -29,11 +29,11 @@ Projet_Streamlit
 │       │   ├── tweets_preprocess.csv
 │       │   ├── word_counts_2.csv
 │       │   └── word_counts.csv
-│       └── output_png
-│           ├── twitter_wordcloud_2.png
-│           ├── twitter_wordcloud.png
-│           ├── twitter_wordcloud.png
-│           └── twitter-logo.png
+│       ├── output_png
+│       ├    ├── twitter_wordcloud_2.png
+│       ├    ├── twitter_wordcloud.png
+│       ├    ├── twitter_wordcloud.png
+│       └── twitter-logo.png
 └── images_readme
         ├── Part_1_dashboard.png
         └── Part_2_dashboard.PNG
