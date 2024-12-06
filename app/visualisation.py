@@ -301,6 +301,7 @@ def page3(df2):
         with col2: 
             top_words_first = pd.read_csv("data/output_csv/word_counts.csv")
             top_words_second = pd.read_csv("data/output_csv/word_counts_2.csv")
+            top_words_third = pd.read_csv("data/output_csv/word_counts_3.csv")
         
             top_number_words = 10 
            
@@ -335,7 +336,7 @@ def page3(df2):
             # Troisième graphique interactif
             st.subheader("Top 10 des Mots Clés les Plus Pertinents dans les Descriptions Utilisateurs")
             fig3 = px.bar(
-                top_words_second.head(top_number_words),
+                top_words_third.head(top_number_words),
                 x="Count",
                 y="Word",
                 orientation='h',
