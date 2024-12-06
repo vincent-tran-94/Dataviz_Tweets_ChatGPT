@@ -22,7 +22,7 @@ def page2(df2):
 
     tab3,tab4, tab5 = st.tabs([
         "📊 Top utilisateurs les plus actifs sur Twitter",
-        "🔠 Wordcloud de mots des tweets ",
+        "🔠 Wordcloud de mots",
         "🎯 Analyse des hashtags et des mentions d’utilisateurs"
     ])
 
@@ -225,32 +225,37 @@ def page2(df2):
             </div>
             """,
             unsafe_allow_html=True)
-
+            st.image("data/output_png/twitter_wordcloud_3.png")
+            st.markdown("""
+            <div style="font-size: 25px; font-weight: bold;">
+                Analyse des Mots fréquents dans les descriptions utilisateurs
+            </div>
+            """,
+            unsafe_allow_html=True)
         with col2: 
             top_words_first = pd.read_csv("data/output_csv/word_counts.csv")
             top_words_second = pd.read_csv("data/output_csv/word_counts_2.csv")
         
-            top_number_words_first = 10 
-            top_number_words_second = 10 
+            top_number_words = 10 
            
             # Premier graphique interactif
-            st.subheader("Top 10 des meilleurs mots sur environ 200 000 tweets (De novembre 2022 à février 2023)")
+            st.subheader("Top 10 des Mots Clés les Plus Populaires dans Environ 200 000 Tweets (Novembre 2022 à Février 2023)")
             fig1 = px.bar(
-                top_words_first.head(top_number_words_first),
+                top_words_first.head(top_number_words),
                 x="Count",
                 y="Word",
                 orientation='h',
                 labels={"Count": "Total", "Word": "Mot"},
                 color="Count",  # Ajoute une couleur basée sur le nombre d'occurrences
-                color_continuous_scale="Viridis"  # Palette de couleurs
+                color_continuous_scale="Magma"  # Palette de couleurs
             )
             fig1.update_layout(xaxis=dict(showgrid=True, gridcolor='lightgrey', gridwidth=0.5),yaxis=dict(categoryorder="total ascending",showgrid=True, gridcolor='lightgrey', gridwidth=0.5))  # Trie par ordre croissant
             st.plotly_chart(fig1)
 
             # Deuxième graphique interactif
-            st.subheader("Top 10 des meilleurs mots sur l'article de presse de 500 000 tweets (De janvier à mars 2023)")
+            st.subheader("Top 10 des Mots Clés les Plus Populaires basé sur un article de 500 000 Tweets (Janvier à Mars 2023)")
             fig2 = px.bar(
-                top_words_second.head(top_number_words_second),
+                top_words_second.head(top_number_words),
                 x="Count",
                 y="Word",
                 orientation='h',
@@ -260,6 +265,20 @@ def page2(df2):
             )
             fig2.update_layout(xaxis=dict(showgrid=True, gridcolor='lightgrey', gridwidth=0.5),yaxis=dict(categoryorder="total ascending",showgrid=True, gridcolor='lightgrey', gridwidth=0.5))  # Trie par ordre croissant
             st.plotly_chart(fig2)
+
+            # Troisième graphique interactif
+            st.subheader("Top 10 des Mots Clés les Plus Pertinents dans les Descriptions Utilisateurs")
+            fig3 = px.bar(
+                top_words_second.head(top_number_words),
+                x="Count",
+                y="Word",
+                orientation='h',
+                labels={"Count": "Total", "Word": "Mot"},
+                color="Count",  # Ajoute une couleur basée sur le nombre d'occurrences
+                color_continuous_scale="Cividis"  # Palette de couleurs différente
+            )
+            fig3.update_layout(xaxis=dict(showgrid=True, gridcolor='lightgrey', gridwidth=0.5),yaxis=dict(categoryorder="total ascending",showgrid=True, gridcolor='lightgrey', gridwidth=0.5))  # Trie par ordre croissant
+            st.plotly_chart(fig3)
 
 
     with tab5:
