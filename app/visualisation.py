@@ -15,6 +15,72 @@ def page1(df,df2):
     st.dataframe(df2.describe())
 
 def page2(df2):
+    #Filtrer chaque metrique des utilisateurs
+    user_metrics = (
+        df2.groupby("User")
+        .agg(
+            total_likes=("Likes", "sum"),
+            total_retweets=("Retweets", "sum"),
+            total_tweets=("Tweet", "count"),
+            total_followers=("UserFollowers", "max"),
+            total_friends=("UserFriends","max"),
+            unique_words=("processed_tweet", lambda x: sum(count_unique_words(tweet) for tweet in x)),
+        )
+        .reset_index()
+    )
+
+    st.markdown("**Calcul des métriques** : likes, retweets, tweets, followers, amis et nombre de mots différents")
+
+    # Métriques globales
+    st.markdown("### Métriques globales :")
+    col7, col8, col9, col10 = st.columns(4)
+    col7.metric("Total global des tweets", len(df2["processed_tweet"]))
+    col8.metric("Total global des utilisateurs", len(user_metrics["User"]))
+    col9.metric("Total global des likes", int(df2["Likes"].sum()))
+    col10.metric("Total global des retweets", int(df2["Retweets"].sum()))
+
+
+    # Filtrer par utilisateur
+    selected_user = st.selectbox("Choisissez un utilisateur :", user_metrics["User"].unique(),index=None,placeholder="Select user...")
+    if selected_user:
+        user_data = user_metrics[user_metrics["User"] == selected_user].iloc[0]
+        user_tweets = df2[df2["User"] == selected_user]
+        user_urls = user_tweets["Url"].tolist()  
+        user_description = user_tweets["UserDescription"].iloc[0]  # Récupère la description de l'utilisateur
+
+        st.markdown(f"### Métriques pour l'utilisateur : **{selected_user}**")
+        st.markdown(f"**Description de l'utilisateur :** {user_description}")  # Affiche la description
+
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Nombre de Likes", int(user_data["total_likes"]))
+        col2.metric("Nombre de Retweets", int(user_data["total_retweets"]))
+        col3.metric("Total de Tweets postés", user_data["total_tweets"])
+
+        col4, col5, col6 = st.columns(3)
+        col4.metric("Nombre de Followers", int(user_data["total_followers"]))
+        col5.metric("Nombre d'amis", int(user_data["total_friends"]))
+        col6.metric("Total de mots uniques", user_data["unique_words"])
+
+        st.markdown("Liste des URLs associées :")
+        user_tweets_table = user_tweets[["Date", "Tweet", "Url"]].rename(
+            columns={
+                "Date": "Date",
+                "Tweet": "Tweet posté",
+                "Url": "Associated URL"
+            }
+        )
+
+        #Mettre une balise HTML pour accéder au lien directement sur Streamlit
+        user_tweets_table["Associated URL"] = user_tweets_table["Associated URL"].apply(
+            lambda url: f'<a href="{url}" target="_blank">{url}</a>')
+
+        # Convertir le DataFrame en HTML
+        table_html = user_tweets_table.to_html(escape=False, index=False)
+        # Afficher le tableau HTML dans Streamlit
+        st.markdown(table_html, unsafe_allow_html=True)
+
+
+def page3(df2):
     tab1, tab2 = st.tabs([
         "👍 Relation Likes et Retweets",
         "📶 Periode d'analyse de données en jour, semaine et mois",
@@ -315,4 +381,3 @@ def page2(df2):
             st.plotly_chart(fig_mentions)  # Affiche le deuxième graphique dans la deuxième colonne
 
     return tab1, tab2, tab3, tab4, tab5
-
