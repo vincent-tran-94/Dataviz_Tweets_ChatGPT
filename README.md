@@ -32,6 +32,7 @@ Projet_Streamlit
 │       └── output_png
 │           ├── twitter_wordcloud_2.png
 │           ├── twitter_wordcloud.png
+│           ├── twitter_wordcloud.png
 │           └── twitter-logo.png
 └── images_readme
         ├── Part_1_dashboard.png
@@ -59,7 +60,15 @@ pip install -r requirements.txt
 ## Analyse des données et import des fichiers CSV
 Le fichier Projet_Vincent_Python.ipynb est un fichier notebook qui permet d'analyser les données sur les Tweets de ChatGPT
 Avant de lancer l'application Streamlit, lancer d'abord le notebook pour générer les fichiers CSV 
+Télécharger le deuxième dataset dans ce site 
 
+```
+https://www.kaggle.com/datasets/khalidryder777/500k-chatgpt-tweets-jan-mar-2023"
+```
+Après avoir téléchargé le fichier, insérer le fichier CSV dans le chemin en renommant le fichier Twitter_article.csv
+```
+cp Twitter_article.csv app/data/input_csv/
+```
 ## Lanchement de l'application web sur Streamlit
 Diriger vous vers le dossier app
 ```
