@@ -303,10 +303,10 @@ def page3(df2):
             top_words_second = pd.read_csv("data/output_csv/word_counts_2.csv")
             top_words_third = pd.read_csv("data/output_csv/word_counts_3.csv")
         
-            top_number_words = 10 
+            top_number_words = 20
            
             # Premier graphique interactif
-            st.subheader("Top 10 des Mots Clés les Plus Populaires dans Environ 200 000 Tweets (Novembre 2022 à Février 2023)")
+            st.subheader("Top 20 des Mots Clés les Plus Populaires dans Environ 200 000 Tweets (Novembre 2022 à Février 2023)")
             fig1 = px.bar(
                 top_words_first.head(top_number_words),
                 x="Count",
@@ -320,7 +320,7 @@ def page3(df2):
             st.plotly_chart(fig1)
 
             # Deuxième graphique interactif
-            st.subheader("Top 10 des Mots Clés les Plus Populaires basé sur un article de 500 000 Tweets (Janvier à Mars 2023)")
+            st.subheader("Top 20 des Mots Clés les Plus Populaires basé sur un article de 500 000 Tweets (Janvier à Mars 2023)")
             fig2 = px.bar(
                 top_words_second.head(top_number_words),
                 x="Count",
@@ -334,7 +334,7 @@ def page3(df2):
             st.plotly_chart(fig2)
 
             # Troisième graphique interactif
-            st.subheader("Top 10 des Mots Clés les Plus Pertinents dans les Descriptions Utilisateurs")
+            st.subheader("Top 20 des Mots Clés les Plus Pertinents dans les Descriptions Utilisateurs")
             fig3 = px.bar(
                 top_words_third.head(top_number_words),
                 x="Count",
