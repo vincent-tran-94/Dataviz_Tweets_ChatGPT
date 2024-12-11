@@ -31,7 +31,7 @@ Projet_Streamlit
 │       │   └── word_counts.csv
 │       ├── output_png
 │       ├    ├── twitter_wordcloud_2.png
-│       ├    ├── twitter_wordcloud.png
+│       ├    ├── twitter_wordcloud_3.png
 │       ├    ├── twitter_wordcloud.png
 │       └── twitter-logo.png
 └── images_readme
