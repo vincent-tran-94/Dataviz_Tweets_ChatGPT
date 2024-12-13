@@ -56,7 +56,7 @@ def page1(df,df2,df3):
 
     significations_df3 = {
         "date": "Date de création du tweet",
-        "id": "id Uitilisateur",
+        "id": "id Utilisateur",
         "content": "Texte brut du tweet",
         "username": "Nom d'utilisateur ayant publié le tweet",
         "retweet_count": "Nombre de retweets pour le tweet",
