@@ -6,6 +6,7 @@ from read_data import *
 
 path_csv_1 = "data/input_csv/tweets_users_chatgpt.csv"
 path_csv_2 = "data/output_csv/tweets_preprocess.csv"
+path_csv_3 = "data/input_csv/Twitter_article.csv"
 
 st.cache_resource.clear()
 st.cache_data.clear()
@@ -25,6 +26,7 @@ if not st.session_state.data_loaded:
     try:
         st.session_state.df = load_data(path_csv_1)
         st.session_state.df2 = load_data(path_csv_2)
+        st.session_state.df3 = load_data(path_csv_3)
         st.session_state.data_loaded = True
     except Exception as e:
         st.error(f"Erreur lors du chargement des données : {str(e)}")
@@ -32,6 +34,8 @@ if not st.session_state.data_loaded:
 
 df = st.session_state.df
 df2 = st.session_state.df2
+df3 = st.session_state.df3
+
 
 # Application principale
 st.title("Analyse des Tweets pour des utilisateurs lors de la sortie de ChatGPT")
@@ -54,7 +58,7 @@ with st.sidebar:
 page = st.sidebar.radio("Select a page", ["Description global du dataset","Recherche par utilisateur","Visualisations globales"])
 # Display selected page
 if page == "Description global du dataset":
-    page1(df,df2)
+    page1(df,df2,df3)
 elif page == "Recherche par utilisateur":
     page2(df2)
 elif page == "Visualisations globales":

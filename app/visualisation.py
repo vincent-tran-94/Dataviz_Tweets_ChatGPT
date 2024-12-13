@@ -3,16 +3,87 @@ import plotly.express as px
 import streamlit as st
 from read_data import *
 
-
-def page1(df,df2):
+def page1(df,df2,df3):
+    st.header("Description du jeu de données analysé sur Hugging Face")
     st.subheader("Aperçu des données")
+    st.write(f"**Nombre total d'observations dans le jeu de données : {len(df)}**")
+    st.write(f"**Nombre total de variables : {len(df.columns)}**")
     st.dataframe(df.head())
+    significations = {
+        "Date": "Date de création du tweet",
+        "Tweet": "Texte brut du tweet",
+        "Url": "Lien associé au tweet",
+        "User": "Nom d'utilisateur ayant publié le tweet",
+        "UserCreated": "Date de création du compte utilisateur",
+        "UserVerified": "Indique si l'utilisateur est vérifié",
+        "UserFollowers": "Nombre de followers de l'utilisateur",
+        "UserFriends": "Nombre d'amis de l'utilisateur",
+        "Retweets": "Nombre de retweets pour le tweet",
+        "Likes": "Nombre de likes pour le tweet",
+        "Location": "Localisation mentionnée par l'utilisateur",
+        "UserDescription": "Description utilisateur dans son profil",
+    }
+    
+    # Extraire les informations et ajouter la description
+    info_data = {
+        "Colonne": df.columns,
+        "Non-Null Count": df.notnull().sum().values,
+        "Type": [str(df[col].dtype) for col in df.columns],
+        "Description": [significations.get(col, "Description non disponible") for col in df.columns],
+    }
+    info_df = pd.DataFrame(info_data)  # Convertir en DataFrame
+    st.dataframe(info_df)  # Afficher le tableau dans Streamlit
+
+    st.subheader("Nombre de valeurs manquantes pour chaque variable")
+    # Créer un DataFrame avec le nombre de valeurs manquantes et les noms des colonnes
+    missing_values = pd.DataFrame({
+        "Colonnes": df.columns,
+        "Valeurs manquantes": df.isnull().sum()
+    }).reset_index(drop=True)
+
+    st.dataframe(missing_values)
+    st.subheader("Analyse descriptive globale")
+    st.dataframe(df2.describe())
     st.subheader("Aperçu des tweets et description utilisateur")
     st.dataframe(df[['Tweet', 'UserDescription']].head())
     st.subheader("Aperçu des données après le nettoyage")
     st.dataframe(df2[['processed_tweet', 'processed_userdescription']].head())
+    st.header("Comparaison d'un autre jeu de données analysé sur Kaggle")
+    st.subheader("Aperçu des données")
+    st.write(f"**Nombre total d'observations dans le jeu de données : {len(df3)}**")
+    st.write(f"**Nombre total de variables : {len(df3.columns)}**")
+    st.dataframe(df3.head())
+
+    significations_df3 = {
+        "date": "Date de création du tweet",
+        "id": "id Uitilisateur",
+        "content": "Texte brut du tweet",
+        "username": "Nom d'utilisateur ayant publié le tweet",
+        "retweet_count": "Nombre de retweets pour le tweet",
+        "like_count": "Nombre de likes pour le tweet",
+    }
+
+    # Extraire les informations et ajouter la description
+    info_data_df3 = {
+        "Colonne": df3.columns,
+        "Non-Null Count": df3.notnull().sum().values,
+        "Type": [str(df3[col].dtype) for col in df3.columns],
+        "Description": [significations_df3.get(col, "Description non disponible") for col in df3.columns],
+    }
+    info_df3 = pd.DataFrame(info_data_df3)  # Convertir en DataFrame
+    st.dataframe(info_df3)  # Afficher le tableau dans Streamlit
+    st.subheader("Nombre de valeurs manquantes pour chaque variable")
+    # Créer un DataFrame avec le nombre de valeurs manquantes et les noms des colonnes
+    missing_values_df3 = pd.DataFrame({
+        "Colonnes": df3.columns,
+        "Valeurs manquantes": df3.isnull().sum()
+    }).reset_index(drop=True)
+    st.dataframe(missing_values_df3)
     st.subheader("Analyse descriptive globale")
-    st.dataframe(df2.describe())
+    st.dataframe(df3.describe())
+
+    
+
 
 def page2(df2):
     #Filtrer chaque metrique des utilisateurs
