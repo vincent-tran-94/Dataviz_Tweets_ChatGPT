@@ -28,7 +28,8 @@ Projet_Streamlit
 │       │   ├── top_mentions.csv
 │       │   ├── tweets_preprocess.csv
 │       │   ├── word_counts_2.csv
-│       │   └── word_counts.csv
+│       │   ├── word_counts_3.csv
+|       |   └── word_counts.csv
 │       ├── output_png
 │       ├    ├── twitter_wordcloud_2.png
 │       ├    ├── twitter_wordcloud_3.png
