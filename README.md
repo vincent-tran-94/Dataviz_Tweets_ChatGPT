@@ -70,7 +70,7 @@ Après avoir téléchargé le fichier, insérer le fichier CSV dans le chemin en
 ```
 cp Twitter_article.csv app/data/input_csv/
 ```
-## Lanchement de l'application web sur Streamlit
+## Lancement de l'application web sur Streamlit
 Diriger vous vers le dossier app
 ```
 cd app/
