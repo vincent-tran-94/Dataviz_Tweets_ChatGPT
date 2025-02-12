@@ -70,6 +70,10 @@ Après avoir téléchargé le fichier, insérer le fichier CSV dans le chemin en
 ```
 cp Twitter_article.csv app/data/input_csv/
 ```
+Une fois que vous avez tout effectué ces étapes, vous devez exécuter tout les cellules du notebook pour pouvoir générer des nouveaux fichiers CSV qui nous serve à utiliser pour notre application Streamlit <br>
+
+Si il n'y a pas d'erreurs vous pouvez passer à l'étape suivante ci-dessous: <br>
+
 ## Lancement de l'application web sur Streamlit
 Diriger vous vers le dossier app
 ```
